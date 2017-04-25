@@ -1,0 +1,135 @@
+- name: Deploy Fluentd & fake data generator
+  hosts: fluentd-nodes
+  become: yes
+  tasks:
+  - name: Add toolbelt repository
+    shell: curl -L https://toolbelt.treasuredata.com/sh/install-ubuntu-xenial-td-agent2.sh | sh
+  - name: Update apt cache
+    apt:
+      update_cache: yes
+  - name: Install dependencies
+    apt: name={{item}} state=latest
+    with_items:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - software-properties-common
+      - python-pip
+  - name: Install Python dependencies
+    pip: name={{item}}
+    with_items:
+      - docker-py
+  - name: Add Docker repository key
+    apt_key:
+      id: "58118E89F3A912897C070ADBF76221572C52609D"
+      keyserver: "hkp://p80.pool.sks-keyservers.net:80"
+      state: present
+    register: add_repository_key
+    ignore_errors: true
+  - name: Add Docker repository and update apt cache
+    apt_repository:
+      repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable"
+      mode: '644'
+      update_cache: yes
+      state: present
+  - name: Install Docker CE
+    apt: name=docker-ce state=latest allow_unauthenticated=yes
+  - name: Start Docker
+    service:
+      name: docker
+      state: started
+  - name: Install fluentd-CrateDB-plugin from https://github.com/buom/fluent-plugin-cratedb
+    shell: td-agent-gem install fluent-plugin-cratedb
+  - name: Set fluentd config
+    template:
+      src: fluentd.conf.j2
+      dest: /etc/td-agent/td-agent.conf
+  - name: Restart fluentd
+    service:
+      name: td-agent
+      state: restarted
+  - name: Create a fake apache logs dir
+    file:
+      path: /tmp/fake-apache
+      state: directory
+      mode: 0777
+  - name: Start fake-log-data-generator 1
+    docker_container:
+      name: fake-apache1
+      image: crate/fake-apache-log-generator:latest
+      pull: yes
+      recreate: yes
+      restart_policy: unless-stopped
+      state: started
+      volumes:
+      - /tmp/fake-apache:/out
+  - name: Start fake-log-data-generator 2
+    docker_container:
+      name: fake-apache2
+      image: crate/fake-apache-log-generator:latest
+      pull: yes
+      recreate: yes
+      restart_policy: unless-stopped
+      state: started
+      volumes:
+      - /tmp/fake-apache:/out
+  - name: Start fake-log-data-generator 3
+    docker_container:
+      name: fake-apache3
+      image: crate/fake-apache-log-generator:latest
+      pull: yes
+      recreate: yes
+      restart_policy: unless-stopped
+      state: started
+      volumes:
+      - /tmp/fake-apache:/out
+  - name: Start fake-log-data-generator 4
+    docker_container:
+      name: fake-apache4
+      image: crate/fake-apache-log-generator:latest
+      pull: yes
+      recreate: yes
+      restart_policy: unless-stopped
+      state: started
+      volumes:
+      - /tmp/fake-apache:/out
+  - name: Start fake-log-data-generator 5
+    docker_container:
+      name: fake-apache5
+      image: crate/fake-apache-log-generator:latest
+      pull: yes
+      recreate: yes
+      restart_policy: unless-stopped
+      state: started
+      volumes:
+      - /tmp/fake-apache:/out
+  - name: Start fake-log-data-generator 6
+    docker_container:
+      name: fake-apache6
+      image: crate/fake-apache-log-generator:latest
+      pull: yes
+      recreate: yes
+      restart_policy: unless-stopped
+      state: started
+      volumes:
+      - /tmp/fake-apache:/out
+  - name: Start fake-log-data-generator 7
+    docker_container:
+      name: fake-apache7
+      image: crate/fake-apache-log-generator:latest
+      pull: yes
+      recreate: yes
+      restart_policy: unless-stopped
+      state: started
+      volumes:
+      - /tmp/fake-apache:/out
+  - name: Start fake-log-data-generator 8
+    docker_container:
+      name: fake-apache8
+      image: crate/fake-apache-log-generator:latest
+      pull: yes
+      recreate: yes
+      restart_policy: unless-stopped
+      state: started
+      volumes:
+      - /tmp/fake-apache:/out

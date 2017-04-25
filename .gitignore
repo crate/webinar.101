@@ -90,4 +90,6 @@ ENV/
 
 
 sensordata/server/inventory
+logdata/server/inventory
+logdata/loadgen/inventory
 sensordata/outline.md

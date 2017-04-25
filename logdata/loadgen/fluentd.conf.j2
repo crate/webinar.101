@@ -1,0 +1,35 @@
+
+## match tag=debug.** and dump to console
+<match debug.**>
+  @type stdout
+</match>
+
+## live debugging agent
+<source>
+  @type debug_agent
+  bind 127.0.0.1
+  port 24230
+</source>
+
+<filter apache.**>
+  @type record_transformer
+  enable_ruby
+  <record>
+    time ${time.strftime('%s').to_i * 1000 + time.strftime('%L').to_i}
+  </record>
+</filter>
+
+<match apache.**>
+  @type cratedb
+  hosts ["147.75.64.53:4280", "147.75.64.55:4280", "147.75.64.195:4280"]
+  column_names host, user, time, path, code, size, referer, agent
+  table logs.apache
+  flush_interval 10s
+</match>
+
+<source>
+  @type tail
+  path /tmp/fake-apache/*.log
+  tag apache.access
+  format apache2
+</source>

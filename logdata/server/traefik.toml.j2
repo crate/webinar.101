@@ -1,0 +1,25 @@
+# traefik.toml
+logLevel = "INFO"
+defaultEntryPoints = ["http"]
+[entryPoints]
+  [entryPoints.http]
+  address = ":4280"
+  compress = true
+
+[file]
+
+# rules
+[backends]
+  [backends.backend1]
+    {% for node in groups['crate-nodes'] %}
+    [backends.backend1.servers.server{{loop.index}}]
+      url = "http://{{ hostvars[node]['private_ip'] }}:4200"
+      weight = 1
+    {% endfor %}
+
+
+[frontends]
+  [frontends.frontend1]
+  backend = "backend1"
+  passHostHeader = true
+  priority = 10
