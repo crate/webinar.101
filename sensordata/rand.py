@@ -11,5 +11,5 @@ if __name__ == "__main__":
     while True:
         r = random() * 100
         print(r)
-        insert(cursor, "random", {"number": r})
+        insert(cursor, "random", {"number2": r})
         time.sleep(0.1)

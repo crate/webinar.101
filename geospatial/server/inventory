@@ -1,0 +1,4 @@
+[crate-nodes]
+crate-1 ansible_host=147.75.64.53 ansible_user=root ram=8 private_ip=10.99.17.7
+crate-2 ansible_host=147.75.64.55 ansible_user=root ram=8 private_ip=10.99.17.9
+crate-3 ansible_host=147.75.64.195 ansible_user=root ram=8 private_ip=10.99.17.11

@@ -1,6 +1,6 @@
 
 -- Response codes other than 200
-select count(*), code from logs.apache where code not in ('200') group by code order by 1 desc;
+select count(*), code from logs.apache where code != '200' group by code order by 1 desc;
 
 -- Popular paths that work
 select count(*),  "path" from logs.apache where code = '200' group by 2 order by 1 desc;

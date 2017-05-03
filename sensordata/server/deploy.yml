@@ -53,7 +53,7 @@
   - name: Start CrateDB container
     docker_container:
       name: cratedb
-      image: crate/crate:testing
+      image: crate/crate:1.1.2
       pull: true
       recreate: yes
       restart_policy: unless-stopped

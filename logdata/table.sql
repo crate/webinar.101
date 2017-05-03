@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS "logs"."apache" (
       analyzer = 'standard'
    ),
    "code" STRING,
-   "host" ip,
+   "host" IP,
    "path" STRING,
    "referer" STRING INDEX USING FULLTEXT WITH (
       analyzer = 'standard'
@@ -14,8 +14,9 @@ CREATE TABLE IF NOT EXISTS "logs"."apache" (
       analyzer = 'standard'
    ),
    "month" TIMESTAMP GENERATED ALWAYS AS date_trunc('month', "time"),
-   "referer_domain" as coalesce(regexp_matches("referer", ':\/\/www\.?([^\/]+)[\/]?')[1], null),
-   "app_id" as coalesce(regexp_matches("referer", ':\/\/[w\.]*([^\/]+)[\/]?')[1], null)
+
+   "referer_domain" as coalesce(regexp_matches("referer", ':\/\/[w\.]*([^\/]+)[\/]?')[1], null),
+   "app_id" as coalesce(regexp_matches("path", 'appID=([0-9]+)')[1], null)
 )
 CLUSTERED INTO 6 SHARDS
 PARTITIONED BY ("month")

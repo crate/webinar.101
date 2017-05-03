@@ -1,0 +1,189 @@
+{
+  "annotations": {
+    "list": []
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "hideControls": false,
+  "id": 8,
+  "links": [],
+  "rows": [
+    {
+      "collapse": false,
+      "height": 680,
+      "panels": [
+        {
+          "aliasColors": {},
+          "cacheTimeout": null,
+          "combine": {
+            "label": "Others",
+            "threshold": 0
+          },
+          "datasource": "NYC-311",
+          "fontSize": "80%",
+          "format": "short",
+          "id": 1,
+          "interval": null,
+          "legend": {
+            "show": true,
+            "values": true
+          },
+          "legendType": "Under graph",
+          "links": [],
+          "maxDataPoints": 3,
+          "nullPointMode": "connected",
+          "pieType": "pie",
+          "span": 3,
+          "strokeWidth": 1,
+          "targets": [
+            {
+              "groupByAliases": [
+                "Borough"
+              ],
+              "groupByColumns": [
+                "borough"
+              ],
+              "metricAggs": [
+                {
+                  "alias": "# of incidents",
+                  "column": "*",
+                  "hide": false,
+                  "type": "count"
+                }
+              ],
+              "refId": "A",
+              "resultFormat": "time_series",
+              "timeInterval": "quarter",
+              "whereClauses": [
+                {
+                  "column": " borough ",
+                  "condition": "",
+                  "operator": "!=",
+                  "value": "null"
+                }
+              ]
+            }
+          ],
+          "timeFrom": "15y",
+          "timeShift": null,
+          "title": "# of incidents per quarter",
+          "type": "grafana-piechart-panel",
+          "valueName": "current"
+        },
+        {
+          "circleMaxSize": "6",
+          "circleMinSize": "1",
+          "colors": [
+            "rgba(103, 245, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(172, 45, 45, 0.97)"
+          ],
+          "datasource": "NYC-311",
+          "decimals": 0,
+          "esGeoPoint": "",
+          "esLocationName": "",
+          "esMetric": "geohash_7",
+          "hideEmpty": false,
+          "hideZero": false,
+          "id": 2,
+          "initialZoom": "10",
+          "links": [],
+          "locationData": "table",
+          "mapCenter": "custom",
+          "mapCenterLatitude": "40.75",
+          "mapCenterLongitude": "-73.956",
+          "maxDataPoints": 1,
+          "showLegend": true,
+          "span": 9,
+          "stickyLabels": false,
+          "tableLabel": "location",
+          "targets": [
+            {
+              "groupByAliases": [
+                "",
+                ""
+              ],
+              "groupByColumns": [
+                "geohash_5",
+                "complaint_type"
+              ],
+              "metricAggs": [
+                {
+                  "alias": "metric",
+                  "column": "*",
+                  "type": "count"
+                },
+                {
+                  "alias": "geohash",
+                  "column": "geohash_7",
+                  "type": "arbitrary"
+                },
+                {
+                  "alias": "location",
+                  "column": "complaint_type",
+                  "type": "arbitrary"
+                }
+              ],
+              "refId": "A",
+              "resultFormat": "table",
+              "timeInterval": "month",
+              "whereClauses": []
+            }
+          ],
+          "thresholds": "3,5",
+          "title": "Incidents",
+          "type": "grafana-worldmap-panel",
+          "unitPlural": "incidents",
+          "unitSingle": "",
+          "unitSingular": "incident",
+          "valueName": "max"
+        }
+      ],
+      "repeat": null,
+      "repeatIteration": null,
+      "repeatRowId": null,
+      "showTitle": false,
+      "title": "Dashboard Row",
+      "titleSize": "h6"
+    }
+  ],
+  "schemaVersion": 14,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-5y",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ],
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
+    ]
+  },
+  "timezone": "browser",
+  "title": "Geospatial",
+  "version": 17
+}
